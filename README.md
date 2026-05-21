@@ -1,7 +1,7 @@
 # Tugas 1 - Pemrograman Web
 
 **Identitas Mahasiswa:**
-* **Nama:** Ikhwan Abdillah"
+* **Nama:** Ikhwan Abdillah
 * **NIM:** 24.12.3311
 * **Jurusan:** Sistem Informasi (SI04)
 
