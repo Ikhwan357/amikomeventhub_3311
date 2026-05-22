@@ -8,88 +8,97 @@
 
         <div class="container mx-auto px-6 py-16">
 
-            <div class="text-center mb-10">
-                <h1 class="text-4xl font-bold text-slate-800 mb-2">
+            <div class="text-center mb-12">
+                <span
+                    class="px-4 py-2 bg-slate-200 text-slate-700 rounded-full text-sm font-black uppercase tracking-wider">
+                    Help Center
+                </span>
+
+                <h1 class="text-5xl font-black text-slate-800 mt-5 mb-4">
                     Pusat Bantuan
                 </h1>
 
-                <p class="text-slate-600">
-                    Temukan jawaban dari pertanyaan yang sering ditanyakan pengguna.
+                <p class="text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                    Temukan panduan singkat seputar penggunaan AmikomEventHub, mulai dari melihat katalog,
+                    mendaftar event, hingga menghubungi admin.
                 </p>
             </div>
 
-            <div class="grid md:grid-cols-2 gap-6">
+            <div class="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
 
                 <div
-                    class="bg-white rounded-2xl shadow-lg p-6 hover:scale-105 transition duration-300 border-l-4 border-blue-500">
-                    <div class="flex items-center gap-3 mb-3">
+                    class="bg-white/90 backdrop-blur-xl rounded-3xl shadow-lg shadow-slate-300/50 p-7 border border-white hover:-translate-y-1 transition duration-300">
+                    <div class="flex items-center gap-4 mb-4">
                         <div
-                            class="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold">
-                            ?
+                            class="w-12 h-12 bg-slate-900 text-white rounded-2xl flex items-center justify-center font-black">
+                            01
                         </div>
 
-                        <h2 class="text-xl font-semibold text-slate-800">
-                            Apa itu website ini?
+                        <h2 class="text-xl font-black text-slate-800">
+                            Mengenal AmikomEventHub
                         </h2>
                     </div>
 
-                    <p class="text-slate-600">
-                        Website ini digunakan untuk melihat berbagai event menarik dan memudahkan pengguna melakukan
-                        pendaftaran event.
+                    <p class="text-slate-600 leading-relaxed">
+                        AmikomEventHub adalah website untuk menampilkan informasi event kampus secara lebih rapi,
+                        sehingga pengguna dapat melihat detail acara, jadwal, dan informasi penting lainnya.
                     </p>
                 </div>
 
                 <div
-                    class="bg-white rounded-2xl shadow-lg p-6 hover:scale-105 transition duration-300 border-l-4 border-green-500">
-                    <div class="flex items-center gap-3 mb-3">
+                    class="bg-white/90 backdrop-blur-xl rounded-3xl shadow-lg shadow-slate-300/50 p-7 border border-white hover:-translate-y-1 transition duration-300">
+                    <div class="flex items-center gap-4 mb-4">
                         <div
-                            class="w-10 h-10 bg-green-100 text-green-600 rounded-full flex items-center justify-center font-bold">
-                            ✓
+                            class="w-12 h-12 bg-slate-900 text-white rounded-2xl flex items-center justify-center font-black">
+                            02
                         </div>
 
-                        <h2 class="text-xl font-semibold text-slate-800">
-                            Cara daftar event?
+                        <h2 class="text-xl font-black text-slate-800">
+                            Melihat Katalog Event
                         </h2>
                     </div>
 
-                    <p class="text-slate-600">
-                        Masuk ke halaman katalog, pilih event yang tersedia, lalu lakukan pendaftaran sesuai petunjuk.
+                    <p class="text-slate-600 leading-relaxed">
+                        Pengguna dapat membuka halaman katalog untuk melihat daftar event yang tersedia,
+                        termasuk nama event, deskripsi, lokasi, dan informasi pendaftaran.
                     </p>
                 </div>
 
                 <div
-                    class="bg-white rounded-2xl shadow-lg p-6 hover:scale-105 transition duration-300 border-l-4 border-purple-500">
-                    <div class="flex items-center gap-3 mb-3">
+                    class="bg-white/90 backdrop-blur-xl rounded-3xl shadow-lg shadow-slate-300/50 p-7 border border-white hover:-translate-y-1 transition duration-300">
+                    <div class="flex items-center gap-4 mb-4">
                         <div
-                            class="w-10 h-10 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center font-bold">
-                            !
+                            class="w-12 h-12 bg-slate-900 text-white rounded-2xl flex items-center justify-center font-black">
+                            03
                         </div>
 
-                        <h2 class="text-xl font-semibold text-slate-800">
-                            Apakah event berbayar?
+                        <h2 class="text-xl font-black text-slate-800">
+                            Informasi Pendaftaran
                         </h2>
                     </div>
 
-                    <p class="text-slate-600">
-                        Beberapa event gratis dan beberapa event premium memerlukan biaya pendaftaran.
+                    <p class="text-slate-600 leading-relaxed">
+                        Jika event menyediakan pendaftaran, pengguna dapat mengikuti arahan yang tersedia pada detail
+                        event. Pastikan data yang dimasukkan sudah benar sebelum dikirim.
                     </p>
                 </div>
 
                 <div
-                    class="bg-white rounded-2xl shadow-lg p-6 hover:scale-105 transition duration-300 border-l-4 border-red-500">
-                    <div class="flex items-center gap-3 mb-3">
+                    class="bg-white/90 backdrop-blur-xl rounded-3xl shadow-lg shadow-slate-300/50 p-7 border border-white hover:-translate-y-1 transition duration-300">
+                    <div class="flex items-center gap-4 mb-4">
                         <div
-                            class="w-10 h-10 bg-red-100 text-red-600 rounded-full flex items-center justify-center font-bold">
-                            ☎
+                            class="w-12 h-12 bg-slate-900 text-white rounded-2xl flex items-center justify-center font-black">
+                            04
                         </div>
 
-                        <h2 class="text-xl font-semibold text-slate-800">
-                            Butuh bantuan lebih lanjut?
+                        <h2 class="text-xl font-black text-slate-800">
+                            Menghubungi Admin
                         </h2>
                     </div>
 
-                    <p class="text-slate-600">
-                        Hubungi admin melalui halaman kontak untuk mendapatkan bantuan lebih lanjut.
+                    <p class="text-slate-600 leading-relaxed">
+                        Jika pengguna mengalami kendala atau membutuhkan informasi tambahan, silakan gunakan halaman
+                        kontak untuk menghubungi admin AmikomEventHub.
                     </p>
                 </div>
 

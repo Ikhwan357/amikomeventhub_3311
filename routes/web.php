@@ -50,7 +50,8 @@ Route::get('/contact', [HomeController::class, 'kontak'])
 |--------------------------------------------------------------------------
 */
 
-Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
+Route::get('/events/{event}', [EventController::class, 'show'])
+    ->name('events.show');
 
 Route::get('/checkout/{event}', [EventController::class, 'checkout'])
     ->name('checkout');
@@ -58,7 +59,7 @@ Route::get('/checkout/{event}', [EventController::class, 'checkout'])
 Route::post('/checkout/{event}/process', [EventController::class, 'processCheckout'])
     ->name('checkout.process');
 
-Route::get('/my-ticket', [EventController::class, 'ticket'])
+Route::get('/ticket/{id}', [TransactionController::class, 'ticket'])
     ->name('ticket');
 
 /*
@@ -69,44 +70,14 @@ Route::get('/my-ticket', [EventController::class, 'ticket'])
 
 Route::prefix('admin')->name('admin.')->group(function () {
 
-    /*
-    |--------------------------------------------------------------------------
-    | DASHBOARD
-    |--------------------------------------------------------------------------
-    */
-
     Route::get('/', [DashboardController::class, 'index'])
         ->name('dashboard');
 
-    /*
-    |--------------------------------------------------------------------------
-    | CRUD EVENT
-    |--------------------------------------------------------------------------
-    */
-
     Route::resource('events', AdminEventController::class);
-
-    /*
-    |--------------------------------------------------------------------------
-    | CRUD CATEGORY
-    |--------------------------------------------------------------------------
-    */
 
     Route::resource('categories', CategoryController::class);
 
-    /*
-    |--------------------------------------------------------------------------
-    | CRUD PARTNER
-    |--------------------------------------------------------------------------
-    */
-
     Route::resource('partners', PartnerController::class);
-
-    /*
-    |--------------------------------------------------------------------------
-    | TRANSACTIONS
-    |--------------------------------------------------------------------------
-    */
 
     Route::get('/transactions', [TransactionController::class, 'index'])
         ->name('transactions.index');

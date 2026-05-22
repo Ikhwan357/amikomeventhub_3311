@@ -86,6 +86,44 @@
             </div>
         </section>
 
+        <!-- Partner Section -->
+        <section class="max-w-7xl mx-auto px-6 py-20">
+            <div class="text-center mb-14">
+                <span
+                    class="inline-block px-4 py-2 bg-indigo-100 text-indigo-700 rounded-full text-sm font-black uppercase tracking-wider mb-4">
+                    Trusted Partner
+                </span>
+
+                <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-4">
+                    Partner Kami
+                </h2>
+
+                <p class="text-slate-500 max-w-2xl mx-auto">
+                    Berbagai partner terpercaya yang mendukung event-event terbaik di AmikomEventHub.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                @forelse ($partners as $partner)
+                    <div
+                        class="bg-white rounded-[2rem] border border-slate-200 shadow-xl shadow-slate-200/60 p-8 hover:scale-105 transition duration-300 text-center">
+                        <div class="w-24 h-24 mx-auto mb-5">
+                            <img src="{{ $partner->logo_url }}" alt="{{ $partner->name }}"
+                                class="w-full h-full object-contain rounded-2xl">
+                        </div>
+
+                        <h3 class="font-black text-slate-800 text-lg">
+                            {{ $partner->name }}
+                        </h3>
+                    </div>
+                @empty
+                    <div class="col-span-4 text-center text-slate-500">
+                        Belum ada partner tersedia.
+                    </div>
+                @endforelse
+            </div>
+        </section>
+
         <!-- Category Section -->
         <section class="max-w-7xl mx-auto px-6 py-10">
             <div class="text-center mb-10">
@@ -198,44 +236,5 @@
 
             </div>
         </section>
-
-        <!-- Partner Section -->
-        <section class="max-w-7xl mx-auto px-6 py-20">
-            <div class="text-center mb-14">
-                <span
-                    class="inline-block px-4 py-2 bg-indigo-100 text-indigo-700 rounded-full text-sm font-black uppercase tracking-wider mb-4">
-                    Trusted Partner
-                </span>
-
-                <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-4">
-                    Partner Kami
-                </h2>
-
-                <p class="text-slate-500 max-w-2xl mx-auto">
-                    Berbagai partner terpercaya yang mendukung event-event terbaik di AmikomEventHub.
-                </p>
-            </div>
-
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-                @forelse ($partners as $partner)
-                    <div
-                        class="bg-white rounded-[2rem] border border-slate-200 shadow-xl shadow-slate-200/60 p-8 hover:scale-105 transition duration-300 text-center">
-                        <div class="w-24 h-24 mx-auto mb-5">
-                            <img src="{{ $partner->logo_url }}" alt="{{ $partner->name }}"
-                                class="w-full h-full object-contain rounded-2xl">
-                        </div>
-
-                        <h3 class="font-black text-slate-800 text-lg">
-                            {{ $partner->name }}
-                        </h3>
-                    </div>
-                @empty
-                    <div class="col-span-4 text-center text-slate-500">
-                        Belum ada partner tersedia.
-                    </div>
-                @endforelse
-            </div>
-        </section>
-
     </div>
 @endsection
