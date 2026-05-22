@@ -42,7 +42,7 @@
                                 </h3>
 
                                 <p class="text-slate-500">
-                                    Ikhwanabdillah@students.amikom.ac.id
+                                    Ikhwanabdillah399@gmail.com
                                 </p>
                             </div>
 
@@ -60,7 +60,7 @@
                                 </h3>
 
                                 <p class="text-slate-500">
-                                    +62 812-xxxx-xxxx
+                                    +6282283190148
                                 </p>
                             </div>
 
