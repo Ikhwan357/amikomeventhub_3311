@@ -50,11 +50,13 @@ Route::get('/contact', [HomeController::class, 'kontak'])
 |--------------------------------------------------------------------------
 */
 
-Route::get('/event/detail', [EventController::class, 'show'])
-    ->name('events.show');
+Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
 
-Route::get('/checkout', [EventController::class, 'checkout'])
+Route::get('/checkout/{event}', [EventController::class, 'checkout'])
     ->name('checkout');
+
+Route::post('/checkout/{event}/process', [EventController::class, 'processCheckout'])
+    ->name('checkout.process');
 
 Route::get('/my-ticket', [EventController::class, 'ticket'])
     ->name('ticket');
