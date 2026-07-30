@@ -1,162 +1,407 @@
 @extends('layouts.app')
 
-@section('title', 'Checkout - ' . $event->title)
+@section('title', 'Konfirmasi Pemesanan')
 
 @section('content')
 
     @php
-        $serviceFee = 5000;
+        $isFreeEvent = (float) $event->price == 0;
+        $serviceFee = $isFreeEvent ? 0 : 5000;
         $total = $event->price + $serviceFee;
     @endphp
 
-    <div class="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-slate-100 py-16">
-        <div class="max-w-5xl mx-auto px-6">
+    <div class="min-h-screen bg-gradient-to-br from-slate-50 via-white to-indigo-50 py-16">
+
+        <div class="max-w-6xl mx-auto px-6">
 
             <a href="{{ route('events.show', $event->id) }}"
-                class="inline-flex items-center gap-2 text-slate-600 font-bold mb-8 hover:text-slate-900 transition">
-                ← Kembali ke Event
+                class="inline-flex items-center gap-2 text-slate-600 hover:text-slate-900 font-bold mb-8 transition group">
+
+                <svg class="w-4 h-4 group-hover:-translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                Kembali ke Detail Event
+
             </a>
 
             <div class="mb-10">
-                <span class="px-4 py-2 bg-slate-100 text-slate-700 rounded-full text-sm font-bold">
-                    Checkout Tiket
+
+                <span class="inline-flex px-4 py-2 rounded-full bg-slate-100 text-slate-700 font-bold text-sm">
+
+                    Konfirmasi Pemesanan
+
                 </span>
 
-                <h1 class="text-4xl md:text-5xl font-black text-slate-900 mt-5">
-                    Selesaikan Pesanan Anda
+                <h1 class="text-5xl font-black text-slate-900 mt-5">
+
+                    Pastikan Informasi Pesanan
+
                 </h1>
 
-                <p class="text-slate-500 mt-3">
-                    Lengkapi data pemesan untuk mendapatkan e-ticket event.
+                <p class="text-slate-500 mt-3 max-w-2xl">
+
+                    Seluruh data pemesan diambil langsung dari akun yang sedang login.
+                    Silakan periksa kembali sebelum melanjutkan pembayaran.
+
                 </p>
+
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="grid lg:grid-cols-3 gap-8 items-start">
 
-                <!-- Form Card -->
+                <!-- ================= LEFT ================= -->
+
                 <div
                     class="lg:col-span-2 bg-white rounded-[2rem] border border-slate-200 shadow-xl shadow-slate-200/60 p-8">
 
-                    <h3 class="text-2xl font-black text-slate-800 mb-2">
-                        Data Pemesan
-                    </h3>
+                    <h2 class="text-2xl font-black text-slate-900 mb-8">
 
-                    <p class="text-slate-500 mb-8">
-                        Pastikan data yang dimasukkan sudah benar.
-                    </p>
+                        Informasi Event
 
-                    <form action="{{ route('checkout.process', $event->id) }}" method="POST" class="space-y-6">
-                        @csrf
+                    </h2>
+
+                    <div class="grid md:grid-cols-2 gap-x-8 gap-y-7">
 
                         <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-2">
-                                Nama Lengkap
-                            </label>
 
-                            <input type="text" name="customer_name" placeholder="Masukkan nama lengkap" required
-                                class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-slate-900/10 focus:border-slate-900 outline-none transition">
-                        </div>
+                            <p class="text-xs font-black uppercase tracking-wider text-slate-400 mb-2">
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                Nama Event
 
-                            <div>
-                                <label class="block text-sm font-bold text-slate-700 mb-2">
-                                    Email Aktif
-                                </label>
+                            </p>
+                            <p class="text-xl font-black text-slate-800">
 
-                                <input type="email" name="customer_email" placeholder="contoh@gmail.com" required
-                                    class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-slate-900/10 focus:border-slate-900 outline-none transition">
+                                {{ $event->title }}
 
-                                <p class="text-xs text-slate-400 mt-2">
-                                    E-ticket akan ditampilkan setelah pembayaran berhasil.
-                                </p>
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-bold text-slate-700 mb-2">
-                                    No. WhatsApp
-                                </label>
-
-                                <input type="tel" name="customer_phone" placeholder="08xxxxxxxxxx" required
-                                    class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-slate-900/10 focus:border-slate-900 outline-none transition">
-                            </div>
-
-                        </div>
-
-                        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-5">
-                            <p class="font-bold text-slate-800 mb-1">
-                                Informasi Penting
                             </p>
 
-                            <p class="text-sm text-slate-600">
-                                Pastikan email dan nomor WhatsApp aktif agar data pemesanan tersimpan dengan benar.
+                        </div>
+
+                        <div>
+
+                            <p class="text-xs font-black uppercase tracking-wider text-slate-400 mb-2">
+
+                                Kategori
+
                             </p>
+
+                            <p class="font-semibold text-slate-700">
+
+                                {{ $event->category->name }}
+
+                            </p>
+
                         </div>
 
-                        <button type="submit"
-                            class="block w-full py-5 bg-slate-900 text-white rounded-2xl font-black text-lg shadow-lg hover:bg-slate-800 active:scale-95 transition-all text-center">
-                            Bayar Sekarang
-                        </button>
+                        <div>
 
-                        <p class="text-center text-xs text-slate-400">
-                            Dengan melanjutkan pembayaran, Anda menyetujui Syarat & Ketentuan.
-                        </p>
-                    </form>
+                            <p class="text-xs font-black uppercase tracking-wider text-slate-400 mb-2">
 
-                </div>
+                                Tanggal
 
-                <!-- Summary Card -->
-                <div class="bg-slate-950 text-white rounded-[2rem] p-7 shadow-2xl h-fit">
+                            </p>
 
-                    <h3 class="text-xl font-black mb-6">
-                        Ringkasan Pesanan
-                    </h3>
+                            <p class="font-semibold text-slate-700">
 
-                    @if ($event->poster_path)
-                        <img src="{{ asset('storage/' . $event->poster_path) }}" alt="{{ $event->title }}"
-                            class="w-full h-44 rounded-3xl object-cover mb-5">
-                    @else
-                        <img src="{{ asset('assets/concert.png') }}" alt="{{ $event->title }}"
-                            class="w-full h-44 rounded-3xl object-cover mb-5">
-                    @endif
+                                {{ $event->date->format('d M Y, H:i') }}
 
-                    <h4 class="font-black text-xl leading-tight">
-                        {{ $event->title }}
-                    </h4>
+                            </p>
 
-                    <p class="text-slate-300 text-sm mt-2">
-                        {{ $event->date ? $event->date->format('d M Y, H:i') : '-' }} • {{ $event->location }}
-                    </p>
-
-                    <div class="my-6 border-t border-white/10"></div>
-
-                    <div class="space-y-4 text-sm">
-
-                        <div class="flex justify-between text-slate-300">
-                            <span>Harga Tiket</span>
-                            <span>Rp {{ number_format($event->price, 0, ',', '.') }}</span>
                         </div>
 
-                        <div class="flex justify-between text-slate-300">
-                            <span>Biaya Layanan</span>
-                            <span>Rp {{ number_format($serviceFee, 0, ',', '.') }}</span>
+                        <div>
+
+                            <p class="text-xs font-black uppercase tracking-wider text-slate-400 mb-2">
+
+                                Lokasi
+
+                            </p>
+
+                            <p class="font-semibold text-slate-700">
+
+                                {{ $event->location }}
+
+                            </p>
+
                         </div>
 
-                        <div class="pt-4 border-t border-white/10 flex justify-between items-center">
-                            <span class="font-bold">Total Bayar</span>
+                        <div>
 
-                            <span class="text-2xl font-black text-white">
-                                Rp {{ number_format($total, 0, ',', '.') }}
-                            </span>
+                            <p class="text-xs font-black uppercase tracking-wider text-slate-400 mb-2">
+
+                                Penyelenggara
+
+                            </p>
+
+                            <p class="font-semibold text-slate-700">
+
+                                {{ $event->organization->name }}
+
+                            </p>
+
                         </div>
 
                     </div>
+
+                    <div class="my-10 border-t border-slate-200"></div>
+
+                    <h2 class="text-2xl font-black text-slate-900 mb-8">
+
+                        Data Pemesan
+
+                    </h2>
+
+                    <div class="grid md:grid-cols-2 gap-x-8 gap-y-6">
+
+                        <div>
+
+                            <p class="text-xs font-black uppercase tracking-wider text-slate-400 mb-2">
+
+                                Nama Lengkap
+
+                            </p>
+
+                            <div
+                                class="bg-slate-50 border border-slate-200 rounded-2xl px-5 py-4 font-medium text-slate-700">
+
+                                {{ Auth::user()->name }}
+
+                            </div>
+
+                        </div>
+
+                        <div>
+
+                            <p class="text-xs font-black uppercase tracking-wider text-slate-400 mb-2">
+
+                                Email
+
+                            </p>
+
+                            <div
+                                class="bg-slate-50 border border-slate-200 rounded-2xl px-5 py-4 font-medium text-slate-700 truncate">
+
+                                {{ Auth::user()->email }}
+
+                            </div>
+
+                        </div>
+
+                        <div>
+
+                            <p class="text-xs font-black uppercase tracking-wider text-slate-400 mb-2">
+
+                                Status Akun
+
+                            </p>
+
+                            <div
+                                class="bg-emerald-50 border border-emerald-200 rounded-2xl px-5 py-4 text-emerald-700 font-bold">
+
+                                Login sebagai {{ ucfirst(Auth::user()->role) }}
+
+                            </div>
+
+                        </div>
+
+                        <div>
+
+                            <p class="text-xs font-black uppercase tracking-wider text-slate-400 mb-2">
+
+                                ID Akun
+
+                            </p>
+
+                            <div
+                                class="bg-slate-50 border border-slate-200 rounded-2xl px-5 py-4 font-medium text-slate-700">
+
+                                #{{ Auth::user()->id }}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="mt-10 bg-amber-50 border border-amber-200 rounded-3xl p-6">
+
+                        <h3 class="text-lg font-black text-slate-800 mb-3">
+
+                            Informasi
+
+                        </h3>
+
+                        <ul class="space-y-2 text-slate-600 text-sm">
+
+                            <li>
+                                • Tiket akan otomatis masuk ke akun Anda setelah pembayaran berhasil.
+                            </li>
+
+                            <li>
+                                • Tiket hanya berlaku untuk akun yang melakukan pembelian.
+                            </li>
+
+                            <li>
+                                • Pastikan data akun sudah benar sebelum melanjutkan pembayaran.
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                </div>
+
+                <!-- ================= RIGHT ================= -->
+
+                <div class="bg-slate-950 rounded-[2rem] p-7 text-white shadow-2xl h-fit sticky top-28">
+
+                    <div class="flex items-center justify-between mb-6">
+
+                        <h2 class="text-2xl font-black">
+
+                            Ringkasan Pesanan
+
+                        </h2>
+
+                        @if ($isFreeEvent)
+                            <span
+                                class="px-3 py-1.5 bg-emerald-500/20 text-emerald-400 text-xs font-black uppercase rounded-full">
+                                Gratis
+                            </span>
+                        @endif
+
+                    </div>
+
+                    @if($event->poster_path)
+
+                        <img src="{{ asset('storage/' . $event->poster_path) }}"
+                            class="w-full h-48 object-cover rounded-3xl mb-6">
+
+                    @else
+
+                        <img src="{{ asset('assets/concert.png') }}" class="w-full h-48 object-cover rounded-3xl mb-6">
+
+                    @endif
+
+                    <h3 class="text-xl font-black">
+
+                        {{ $event->title }}
+
+                    </h3>
+
+                    <p class="text-slate-400 mt-2">
+
+                        {{ $event->date->format('d M Y') }}
+
+                    </p>
+
+                    <div class="border-t border-white/10 my-6"></div>
+
+                    <div class="space-y-4">
+
+                        <div class="flex justify-between">
+
+                            <span class="text-slate-300">
+
+                                Harga Tiket
+
+                            </span>
+
+                            <span>
+
+                                @if ($isFreeEvent)
+                                    Gratis
+                                @else
+                                    Rp {{ number_format($event->price, 0, ',', '.') }}
+                                @endif
+
+                            </span>
+
+                        </div>
+
+                        <div class="flex justify-between">
+
+                            <span class="text-slate-300">
+
+                                Biaya Layanan
+
+                            </span>
+
+                            <span>
+
+                                @if ($isFreeEvent)
+                                    Rp 0
+                                @else
+                                    Rp {{ number_format($serviceFee, 0, ',', '.') }}
+                                @endif
+
+                            </span>
+
+                        </div>
+
+                        <div class="border-t border-white/10 pt-5 flex justify-between items-center">
+
+                            <span class="font-bold">
+
+                                Total
+
+                            </span>
+
+                            <span class="text-2xl font-black">
+
+                                @if ($isFreeEvent)
+                                    Rp 0
+                                @else
+                                    Rp {{ number_format($total, 0, ',', '.') }}
+                                @endif
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <form action="{{ route('checkout.process', $event->id) }}" method="POST" class="mt-8">
+
+                        @csrf
+                        <button type="submit"
+                            class="w-full py-5 bg-white text-slate-900 rounded-2xl font-black text-lg hover:bg-slate-100 active:scale-95 transition-all">
+
+                            {{ $isFreeEvent ? 'Klaim Tiket Gratis' : 'Bayar Sekarang' }}
+
+                        </button>
+
+                    </form>
+
+                    <a href="{{ route('events.show', $event->id) }}"
+                        class="block text-center mt-4 text-slate-400 hover:text-white font-semibold transition">
+
+                        Batal
+
+                    </a>
+
+                    <p class="text-xs text-slate-500 mt-8 leading-relaxed">
+
+                        @if ($isFreeEvent)
+                            Dengan melanjutkan, Anda menyetujui syarat dan ketentuan
+                            AmikomEventHub. E-ticket akan otomatis masuk ke akun Anda
+                            tanpa proses pembayaran.
+                        @else
+                            Dengan melanjutkan pembayaran, Anda menyetujui syarat dan
+                            ketentuan AmikomEventHub. Setelah pembayaran berhasil,
+                            e-ticket akan otomatis masuk ke akun Anda.
+                        @endif
+
+                    </p>
 
                 </div>
 
             </div>
 
         </div>
+
     </div>
 
 @endsection

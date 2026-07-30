@@ -12,14 +12,15 @@
 
                 <div class="sticky top-28 space-y-6">
 
-                    <div class="bg-white rounded-[2rem] border border-slate-200 shadow-xl shadow-slate-200/70 p-4">
+                    <div
+                        class="bg-white rounded-[2rem] border border-slate-200 shadow-xl shadow-slate-200/70 p-4 overflow-hidden">
 
                         @if ($event->poster_path)
                             <img src="{{ asset('storage/' . $event->poster_path) }}" alt="{{ $event->title }}"
-                                class="w-full aspect-[3/4] rounded-[1.5rem] object-cover">
+                                class="w-full aspect-[3/4] rounded-[1.5rem] object-cover hover:scale-105 transition-transform duration-500">
                         @else
                             <img src="{{ asset('assets/concert.png') }}" alt="{{ $event->title }}"
-                                class="w-full aspect-[3/4] rounded-[1.5rem] object-cover">
+                                class="w-full aspect-[3/4] rounded-[1.5rem] object-cover hover:scale-105 transition-transform duration-500">
                         @endif
 
                     </div>
@@ -51,6 +52,45 @@
 
                     </div>
 
+                    {{-- Organizer pengunggah event --}}
+                    @if ($event->organization)
+                        <div class="bg-white rounded-[2rem] border border-slate-200 shadow-lg shadow-slate-200/60 p-6">
+
+                            <p class="text-xs font-black text-slate-400 mb-4 uppercase tracking-widest">
+                                Diselenggarakan Oleh
+                            </p>
+
+                            <div class="flex items-center gap-4">
+
+                                <img src="{{ $event->organization->logo_url ?? 'https://ui-avatars.com/api/?name=' . urlencode($event->organization->name) }}"
+                                    alt="{{ $event->organization->name }}"
+                                    class="w-14 h-14 rounded-2xl object-cover border border-slate-200">
+
+                                <div class="min-w-0">
+                                    <p class="font-black text-slate-800 truncate">
+                                        {{ $event->organization->name }}
+                                    </p>
+
+                                    <p class="text-sm text-slate-500">
+                                        Event Organizer
+                                    </p>
+                                </div>
+
+                            </div>
+
+                            <a href="{{ route('home', ['organizer' => $event->organization->id]) }}"
+                                class="mt-5 flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 font-bold text-sm hover:border-indigo-600 hover:text-indigo-600 hover:bg-indigo-50/50 transition">
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="9" width="18" height="12" rx="2"></rect>
+                                    <path d="M8 9V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v3"></path>
+                                </svg>
+                                Lihat Event Lain dari Organizer Ini
+                            </a>
+
+                        </div>
+                    @endif
+
                 </div>
 
             </div>
@@ -70,24 +110,40 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-7">
 
-                        <div class="bg-slate-50 border border-slate-100 px-5 py-4 rounded-2xl">
-                            <p class="text-xs font-black uppercase tracking-wider text-slate-400 mb-2">
-                                Tanggal Event
-                            </p>
+                        <div class="bg-slate-50 border border-slate-100 px-5 py-4 rounded-2xl flex items-start gap-3">
+                            <svg class="w-5 h-5 text-slate-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                            <div>
+                                <p class="text-xs font-black uppercase tracking-wider text-slate-400 mb-2">
+                                    Tanggal Event
+                                </p>
 
-                            <p class="font-bold text-slate-700">
-                                {{ $event->date ? $event->date->format('d F Y, H:i') : '-' }}
-                            </p>
+                                <p class="font-bold text-slate-700">
+                                    {{ $event->date ? $event->date->format('d F Y, H:i') : '-' }}
+                                </p>
+                            </div>
                         </div>
 
-                        <div class="bg-slate-50 border border-slate-100 px-5 py-4 rounded-2xl">
-                            <p class="text-xs font-black uppercase tracking-wider text-slate-400 mb-2">
-                                Lokasi
-                            </p>
+                        <div class="bg-slate-50 border border-slate-100 px-5 py-4 rounded-2xl flex items-start gap-3">
+                            <svg class="w-5 h-5 text-slate-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            <div>
+                                <p class="text-xs font-black uppercase tracking-wider text-slate-400 mb-2">
+                                    Lokasi
+                                </p>
 
-                            <p class="font-bold text-slate-700">
-                                {{ $event->location }}
-                            </p>
+                                <p class="font-bold text-slate-700">
+                                    {{ $event->location }}
+                                </p>
+                            </div>
                         </div>
 
                     </div>
@@ -125,7 +181,14 @@
                                 </span>
                             </h2>
 
-                            <p class="mt-5 text-slate-300">
+                            <p class="mt-5 text-slate-300 flex items-center gap-2">
+                                <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path
+                                        d="M20.91 8.84 8.56 21.19a1.93 1.93 0 0 1-2.73 0L2.81 18.2a1.93 1.93 0 0 1 0-2.73L15.16 3.11a1.93 1.93 0 0 1 1.37-.57h5.28a.93.93 0 0 1 .93.93v5.29a1.93 1.93 0 0 1-.57 1.37z">
+                                    </path>
+                                    <circle cx="16.5" cy="7.5" r="1"></circle>
+                                </svg>
                                 Sisa stok:
                                 <span class="font-black text-white">
                                     {{ $event->stock }} tiket
@@ -133,10 +196,26 @@
                             </p>
                         </div>
 
-                        <a href="{{ route('checkout', ['event' => $event->id]) }}"
-                            class="inline-block w-full md:w-auto px-10 py-5 bg-white text-slate-950 rounded-2xl font-black text-lg shadow-xl hover:bg-slate-200 active:scale-95 transition-all text-center">
-                            Pesan Sekarang
-                        </a>
+                        @if($event->stock > 0)
+
+                            <a href="{{ route('checkout', $event->id) }}"
+                                class="w-full md:w-auto flex items-center justify-center gap-2 bg-white text-slate-950 px-10 py-4 rounded-2xl font-black text-center hover:bg-slate-200 active:scale-95 transition-all shadow-xl">
+                                Pesan Sekarang
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </a>
+
+                        @else
+
+                            <button disabled
+                                class="w-full md:w-auto flex items-center justify-center gap-2 bg-white/10 text-slate-400 px-10 py-4 rounded-2xl font-black text-center cursor-not-allowed border border-white/10">
+                                Tiket Habis
+                            </button>
+
+                        @endif
 
                     </div>
 
@@ -150,7 +229,8 @@
 
                     <ul class="space-y-4 text-slate-600">
 
-                        <li class="flex items-start gap-4 bg-slate-50 border border-slate-100 p-4 rounded-2xl">
+                        <li
+                            class="flex items-start gap-4 bg-slate-50 border border-slate-100 p-4 rounded-2xl hover:border-slate-200 transition">
                             <span
                                 class="w-7 h-7 rounded-full bg-slate-900 text-white flex items-center justify-center text-xs font-black shrink-0">
                                 1
@@ -161,7 +241,8 @@
                             </span>
                         </li>
 
-                        <li class="flex items-start gap-4 bg-slate-50 border border-slate-100 p-4 rounded-2xl">
+                        <li
+                            class="flex items-start gap-4 bg-slate-50 border border-slate-100 p-4 rounded-2xl hover:border-slate-200 transition">
                             <span
                                 class="w-7 h-7 rounded-full bg-slate-900 text-white flex items-center justify-center text-xs font-black shrink-0">
                                 2

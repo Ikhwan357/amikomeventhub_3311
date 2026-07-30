@@ -158,7 +158,7 @@
         </section>
 
         <!-- Events Grid -->
-        <section id="events" class="max-w-7xl mx-auto px-6 py-20">
+        <section id="events" class="max-w-7xl mx-auto px-6 py-20 scroll-mt-28">
             <div class="flex flex-col md:flex-row md:justify-between md:items-end gap-6 mb-12">
                 <div>
                     <span class="inline-block px-4 py-2 bg-indigo-100 text-indigo-700 rounded-full text-sm font-black mb-4">
@@ -179,6 +179,27 @@
                     Semua Event
                 </a>
             </div>
+
+            {{-- Filter per organizer: memisahkan tampilan event antar organizer --}}
+            @if(isset($organizers) && $organizers->count())
+                <div class="flex flex-wrap items-center gap-3 mb-10">
+                    <a href="{{ route('home') }}#events"
+                        class="px-5 py-2.5 rounded-full text-sm font-bold border transition
+                                                {{ !request('organizer') ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-600 border-slate-200 hover:border-indigo-600 hover:text-indigo-600' }}">
+                        Semua Organizer
+                    </a>
+
+                    @foreach ($organizers as $organizer)
+                        <a href="{{ route('home', ['organizer' => $organizer->id]) }}#events"
+                            class="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold border transition
+                                                                {{ request('organizer') == $organizer->id ? 'bg-indigo-600 text-white border-indigo-600' : 'bg-white text-slate-600 border-slate-200 hover:border-indigo-600 hover:text-indigo-600' }}">
+                            <img src="{{ $organizer->logo_url ?? 'https://ui-avatars.com/api/?name=' . urlencode($organizer->name) }}"
+                                alt="{{ $organizer->name }}" class="w-5 h-5 rounded-full object-cover">
+                            {{ $organizer->name }}
+                        </a>
+                    @endforeach
+                </div>
+            @endif
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
@@ -202,6 +223,20 @@
                         </div>
 
                         <div class="p-7">
+
+                            {{-- Organizer pengunggah event --}}
+                            @if($event->organization)
+                                <a href="{{ route('home', ['organizer' => $event->organization->id]) }}"
+                                    class="flex items-center gap-2 mb-4 group/org w-fit">
+                                    <img src="{{ $event->organization->logo_url ?? 'https://ui-avatars.com/api/?name=' . urlencode($event->organization->name) }}"
+                                        alt="{{ $event->organization->name }}"
+                                        class="w-7 h-7 rounded-full object-cover border border-slate-200">
+                                    <span class="text-xs font-bold text-slate-500 group-hover/org:text-indigo-600 transition">
+                                        {{ $event->organization->name }}
+                                    </span>
+                                </a>
+                            @endif
+
                             <h3 class="text-2xl font-black text-slate-800 mb-3 group-hover:text-indigo-600 transition">
                                 {{ $event->title }}
                             </h3>

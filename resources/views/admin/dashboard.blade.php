@@ -1,133 +1,617 @@
 @extends('layouts.admin')
 
-@section('title', 'Admin Dashboard - AmikomEventHub')
+@section('title', 'Dashboard Admin')
 
 @section('content')
-    <!-- Header -->
-    <header class="flex justify-between items-center mb-10">
-        <div>
-            <h1 class="text-3xl font-black">Dashboard Ringkasan</h1>
-            <p class="text-slate-500 font-medium">Selamat datang kembali, Admin!</p>
-        </div>
-        <div class="flex items-center gap-4">
-            <div class="text-right hidden md:block">
-                <p class="font-bold">Admin Super</p>
-                <p class="text-xs text-slate-400">Penyelenggara Utama</p>
-            </div>
-            <div class="w-12 h-12 bg-white rounded-2xl shadow-sm border flex items-center justify-center p-1">
-                <img src="https://ui-avatars.com/api/?name=Admin+Super&background=6366f1&color=fff" class="rounded-xl">
-            </div>
-        </div>
-    </header>
 
-    <!-- Stats Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-        <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
-            <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mb-4">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
-                    </path>
-                </svg>
-            </div>
-            <p class="text-slate-400 text-sm font-bold uppercase mb-1">Total Pendapatan</p>
-            <h3 class="text-2xl font-black">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</h3>
-        </div>
-        <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
-            <div class="w-12 h-12 bg-green-50 text-green-600 rounded-2xl flex items-center justify-center mb-4">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z">
-                    </path>
-                </svg>
-            </div>
-            <p class="text-slate-400 text-sm font-bold uppercase mb-1">Tiket Terjual</p>
-            <h3 class="text-2xl font-black">{{ $ticketsSold }}</h3>
-        </div>
-        <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
-            <div class="w-12 h-12 bg-orange-50 text-orange-600 rounded-2xl flex items-center justify-center mb-4">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-            </div>
-            <p class="text-slate-400 text-sm font-bold uppercase mb-1">Event Aktif</p>
-            <h3 class="text-2xl font-black">{{ $activeEvents }} Event</h3>
-        </div>
-        <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
-            <div class="w-12 h-12 bg-rose-50 text-rose-600 rounded-2xl flex items-center justify-center mb-4">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-            </div>
-            <p class="text-slate-400 text-sm font-bold uppercase mb-1">Pesanan Pending</p>
-            <h3 class="text-2xl font-black">{{ $pendingOrders }} Pesanan</h3>
-        </div>
-    </div>
+    <div class="space-y-8">
 
-    <!-- Latest Sales Table -->
-    <div class="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
-        <div class="p-8 border-b flex justify-between items-center">
-            <h3 class="font-black text-xl">Transaksi Terakhir</h3>
-            <a href="{{ route('admin.transactions.index') }}" class="text-indigo-600 font-bold hover:underline">Lihat
-                Semua</a>
+        {{-- Header --}}
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+
+            <div>
+
+                <h1 class="text-3xl font-black text-slate-900">
+                    Dashboard Admin
+                </h1>
+
+                <p class="text-slate-500 mt-1">
+                    Ringkasan aktivitas seluruh platform AmikomEventHub
+                </p>
+
+            </div>
+
+            <div class="mt-5 md:mt-0">
+
+                <span class="px-4 py-2 rounded-xl bg-indigo-600 text-white font-semibold shadow">
+
+                    {{ now()->format('d F Y') }}
+
+                </span>
+
+            </div>
+
         </div>
-        <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse">
-                <thead class="bg-slate-50 text-slate-400 uppercase text-[10px] font-black tracking-widest">
+
+        {{-- SUMMARY CARD --}}
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
+
+            {{-- Pendapatan --}}
+            <div class="bg-white rounded-3xl shadow-sm border p-6">
+
+                <div class="flex justify-between">
+
+                    <div>
+
+                        <p class="text-slate-500 text-sm">
+                            Total Pendapatan
+                        </p>
+
+                        <h2 class="text-3xl font-black mt-2">
+
+                            Rp {{ number_format($totalRevenue, 0, ',', '.') }}
+
+                        </h2>
+
+                    </div>
+
+                    <div class="w-14 h-14 rounded-2xl bg-green-100 flex items-center justify-center">
+
+                        💰
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {{-- Tiket --}}
+            <div class="bg-white rounded-3xl shadow-sm border p-6">
+
+                <div class="flex justify-between">
+
+                    <div>
+
+                        <p class="text-slate-500 text-sm">
+                            Tiket Terjual
+                        </p>
+
+                        <h2 class="text-3xl font-black mt-2">
+
+                            {{ number_format($ticketsSold) }}
+
+                        </h2>
+
+                    </div>
+
+                    <div class="w-14 h-14 rounded-2xl bg-blue-100 flex items-center justify-center">
+
+                        🎫
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {{-- Event --}}
+            <div class="bg-white rounded-3xl shadow-sm border p-6">
+
+                <div class="flex justify-between">
+
+                    <div>
+
+                        <p class="text-slate-500 text-sm">
+                            Event Aktif
+                        </p>
+
+                        <h2 class="text-3xl font-black mt-2">
+
+                            {{ $activeEvents }}
+
+                        </h2>
+
+                    </div>
+
+                    <div class="w-14 h-14 rounded-2xl bg-orange-100 flex items-center justify-center">
+
+                        📅
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {{-- Pending --}}
+            <div class="bg-white rounded-3xl shadow-sm border p-6">
+
+                <div class="flex justify-between">
+
+                    <div>
+
+                        <p class="text-slate-500 text-sm">
+                            Pending
+                        </p>
+
+                        <h2 class="text-3xl font-black mt-2">
+
+                            {{ $pendingOrders }}
+
+                        </h2>
+
+                    </div>
+
+                    <div class="w-14 h-14 rounded-2xl bg-red-100 flex items-center justify-center">
+
+                        ⏳
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {{-- GRAFIK --}}
+        <div class="grid lg:grid-cols-2 gap-6">
+
+            {{-- User --}}
+            <div class="bg-white rounded-3xl border shadow-sm">
+
+                <div class="p-6 border-b">
+
+                    <h2 class="font-black text-lg">
+
+                        Pertumbuhan Pengguna
+
+                    </h2>
+
+                    <p class="text-sm text-slate-500">
+
+                        Jumlah user yang mendaftar setiap bulan
+
+                    </p>
+
+                </div>
+
+                <div class="p-6">
+
+                    <canvas id="userChart" height="130"></canvas>
+
+                </div>
+
+            </div>
+
+            {{-- Event --}}
+            <div class="bg-white rounded-3xl border shadow-sm">
+
+                <div class="p-6 border-b">
+
+                    <h2 class="font-black text-lg">
+
+                        Pertumbuhan Event
+
+                    </h2>
+
+                    <p class="text-sm text-slate-500">
+
+                        Jumlah event yang dibuat setiap bulan
+
+                    </p>
+
+                </div>
+
+                <div class="p-6">
+
+                    <canvas id="eventChart" height="130"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {{-- Statistik --}}
+        <div class="grid lg:grid-cols-3 gap-6">
+
+            {{-- Organizer --}}
+            <div class="bg-white rounded-3xl border shadow-sm p-6">
+
+                <h2 class="font-black text-xl mb-6">
+
+                    Statistik Platform
+
+                </h2>
+
+                <div class="space-y-5">
+
+                    <div class="flex justify-between">
+
+                        <span>Total User</span>
+
+                        <span class="font-black">
+
+                            {{ $totalUsers }}
+
+                        </span>
+
+                    </div>
+
+                    <div class="flex justify-between">
+
+                        <span>Total Organizer</span>
+
+                        <span class="font-black">
+
+                            {{ $totalOrganizers }}
+
+                        </span>
+
+                    </div>
+
+                    <div class="flex justify-between">
+
+                        <span>Total Event</span>
+
+                        <span class="font-black">
+
+                            {{ $totalEvents }}
+
+                        </span>
+
+                    </div>
+
+                    <div class="flex justify-between">
+
+                        <span>Total Partner</span>
+
+                        <span class="font-black">
+
+                            {{ $totalPartners }}
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {{-- Kategori --}}
+            <div class="bg-white rounded-3xl border shadow-sm p-6">
+
+                <h2 class="font-black text-xl mb-6">
+
+                    Event per Kategori
+
+                </h2>
+
+                <canvas id="categoryChart"></canvas>
+
+            </div>
+
+            {{-- Event Terlaris --}}
+            <div class="bg-white rounded-3xl border shadow-sm p-6">
+
+                <h2 class="font-black text-xl mb-6">
+
+                    Event Terlaris
+
+                </h2>
+
+                @foreach($popularEvents as $event)
+
+                    <div class="mb-5">
+
+                        <div class="flex justify-between mb-2">
+
+                            <span class="font-semibold">
+
+                                {{ $event->title }}
+
+                            </span>
+
+                            <span>
+
+                                {{ $event->transactions_count }}
+
+                            </span>
+
+                        </div>
+
+                        <div class="h-3 rounded-full bg-slate-200">
+
+                            <div class="bg-indigo-600 h-3 rounded-full"
+                                style="width:{{ min($event->transactions_count * 10, 100) }}%">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                @endforeach
+
+            </div>
+
+        </div>
+
+        {{-- Transaksi Terbaru --}}
+        <div class="bg-white rounded-3xl shadow-sm border overflow-hidden">
+
+            <div class="p-6 border-b flex justify-between items-center">
+
+                <h2 class="text-xl font-black">
+
+                    Transaksi Terbaru
+
+                </h2>
+
+                <a href="{{ route('admin.transactions.index') }}" class="text-indigo-600 font-semibold">
+
+                    Lihat Semua →
+
+                </a>
+
+            </div>
+
+            <table class="w-full">
+
+                <thead class="bg-slate-100">
+
                     <tr>
-                        <th class="px-8 py-4">Pembeli</th>
-                        <th class="px-8 py-4">Event</th>
-                        <th class="px-8 py-4">Status</th>
-                        <th class="px-8 py-4">Total</th>
+
+                        <th class="p-4 text-left">Customer</th>
+
+                        <th class="p-4 text-left">Event</th>
+
+                        <th class="p-4 text-left">Status</th>
+
+                        <th class="p-4 text-left">Total</th>
+
                     </tr>
+
                 </thead>
-                <tbody class="divide-y border-t">
-                    @forelse ($latestTransactions as $transaction)
-                        <tr class="hover:bg-slate-50 transition">
-                            <td class="px-8 py-6">
-                                <p class="font-bold uppercase tracking-wide text-sm">
-                                    {{ $transaction->customer_name }}
-                                </p>
-                                <p class="text-xs text-slate-400">
-                                    {{ $transaction->customer_email }}
-                                </p>
+
+                <tbody>
+
+                    @forelse($latestTransactions as $transaction)
+
+                        <tr class="border-t">
+
+                            <td class="p-4">
+
+                                {{ $transaction->customer_name }}
+
                             </td>
 
-                            <td class="px-8 py-6 font-medium text-slate-600">
-                                {{ $transaction->event->title ?? '-' }}
+                            <td class="p-4">
+
+                                {{ $transaction->event->title }}
+
                             </td>
 
-                            <td class="px-8 py-6">
-                                @if ($transaction->status == 'paid')
-                                    <span class="px-3 py-1 bg-green-100 text-green-700 rounded-lg text-xs font-bold uppercase">
+                            <td class="p-4">
+
+                                @if($transaction->status == "paid")
+
+                                    <span class="px-3 py-1 bg-green-100 rounded-full text-green-700 text-xs">
+
                                         Paid
+
                                     </span>
-                                @elseif ($transaction->status == 'pending')
-                                    <span class="px-3 py-1 bg-orange-100 text-orange-700 rounded-lg text-xs font-bold uppercase">
+
+                                @elseif($transaction->status == "pending")
+
+                                    <span class="px-3 py-1 bg-yellow-100 rounded-full text-yellow-700 text-xs">
+
                                         Pending
+
                                     </span>
+
                                 @else
-                                    <span class="px-3 py-1 bg-slate-100 text-slate-600 rounded-lg text-xs font-bold uppercase">
+
+                                    <span class="px-3 py-1 bg-gray-100 rounded-full">
+
                                         {{ $transaction->status }}
+
                                     </span>
+
                                 @endif
+
                             </td>
 
-                            <td class="px-8 py-6 font-black text-indigo-600">
+                            <td class="p-4">
+
                                 Rp {{ number_format($transaction->total_price, 0, ',', '.') }}
+
                             </td>
+
                         </tr>
+
                     @empty
+
                         <tr>
-                            <td colspan="4" class="px-8 py-10 text-center text-slate-400">
+
+                            <td colspan="4" class="p-8 text-center text-slate-500">
+
                                 Belum ada transaksi.
+
                             </td>
+
                         </tr>
+
                     @endforelse
+
                 </tbody>
+
             </table>
+
         </div>
+
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+
+        const months = @json($months);
+
+        new Chart(document.getElementById('userChart'), {
+
+            type: 'line',
+
+            data: {
+
+                labels: months,
+
+                datasets: [{
+
+                    label: 'User',
+
+                    data: @json($userGrowth),
+
+                    borderColor: '#4f46e5',
+
+                    backgroundColor: 'rgba(79,70,229,.12)',
+
+                    fill: true,
+
+                    tension: .4,
+
+                    borderWidth: 3,
+
+                    pointRadius: 4
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                plugins: {
+
+                    legend: {
+                        display: false
+                    }
+
+                },
+
+                scales: {
+
+                    y: {
+                        beginAtZero: true
+                    }
+
+                }
+
+            }
+
+        });
+
+        new Chart(document.getElementById('eventChart'), {
+
+            type: 'bar',
+
+            data: {
+
+                labels: months,
+
+                datasets: [{
+
+                    label: 'Event',
+
+                    data: @json($eventGrowth),
+
+                    backgroundColor: '#10b981',
+
+                    borderRadius: 10
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                plugins: {
+
+                    legend: {
+                        display: false
+                    }
+
+                },
+
+                scales: {
+
+                    y: {
+                        beginAtZero: true
+                    }
+
+                }
+
+            }
+
+        });
+
+        new Chart(document.getElementById('categoryChart'), {
+
+            type: 'doughnut',
+
+            data: {
+
+                labels: @json($categoryLabels),
+
+                datasets: [{
+
+                    data: @json($categoryTotals),
+
+                    backgroundColor: [
+
+                        '#4f46e5',
+
+                        '#10b981',
+
+                        '#f59e0b',
+
+                        '#ef4444',
+
+                        '#06b6d4',
+
+                        '#8b5cf6',
+
+                        '#14b8a6',
+
+                        '#f97316'
+
+                    ]
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                plugins: {
+
+                    legend: {
+
+                        position: 'bottom'
+
+                    }
+
+                }
+
+            }
+
+        });
+
+    </script>
+
 @endsection

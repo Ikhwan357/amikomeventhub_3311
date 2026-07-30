@@ -8,26 +8,26 @@ use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
+    /**
+     * Daftar seluruh transaksi
+     */
     public function index(Request $request)
     {
-        $transactions = Transaction::with('event')
+        $transactions = Transaction::with([
+            'event',
+            'user',
+        ])
 
             ->when($request->search, function ($query, $search) {
 
                 $query->where(function ($q) use ($search) {
 
-                    $q->where('order_id', 'LIKE', '%' . $search . '%')
-
-                        ->orWhere('customer_name', 'LIKE', '%' . $search . '%')
-
-                        ->orWhere('customer_email', 'LIKE', '%' . $search . '%')
-
-                        ->orWhere('customer_phone', 'LIKE', '%' . $search . '%')
-
-                        ->orWhereHas('event', function ($eventQuery) use ($search) {
-
-                            $eventQuery->where('title', 'LIKE', '%' . $search . '%');
-
+                    $q->where('order_id', 'LIKE', "%{$search}%")
+                        ->orWhere('customer_name', 'LIKE', "%{$search}%")
+                        ->orWhere('customer_email', 'LIKE', "%{$search}%")
+                        ->orWhere('customer_phone', 'LIKE', "%{$search}%")
+                        ->orWhereHas('event', function ($event) use ($search) {
+                            $event->where('title', 'LIKE', "%{$search}%");
                         });
 
                 });
@@ -43,9 +43,17 @@ class TransactionController extends Controller
         return view('admin.transactions', compact('transactions'));
     }
 
+    /**
+     * Detail Ticket
+     */
     public function ticket($id)
     {
-        $transaction = Transaction::with('event.category')
+        $transaction = Transaction::with([
+            'event.category',
+            'event.organization',
+            'review',
+            'user',
+        ])
             ->findOrFail($id);
 
         return view('ticket', compact('transaction'));

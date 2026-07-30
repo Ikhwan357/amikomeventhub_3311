@@ -4,6 +4,10 @@
 
 @section('content')
 
+    @php
+        $user = Auth::user();
+    @endphp
+
     <div class="bg-gradient-to-br from-indigo-50 via-white to-slate-100 min-h-screen">
 
         <div class="container mx-auto px-6 py-16">
@@ -15,11 +19,11 @@
                 </span>
 
                 <h1 class="text-5xl font-black text-slate-900 mt-5">
-                    Profil Praktikan
+                    Profil Saya
                 </h1>
 
                 <p class="text-slate-500 mt-3 text-lg">
-                    Informasi singkat mengenai praktikan AmikomEventHub.
+                    Informasi akun Anda di AmikomEventHub.
                 </p>
             </div>
 
@@ -39,39 +43,28 @@
 
                             <div
                                 class="w-44 h-44 rounded-full border-8 border-white overflow-hidden mx-auto shadow-2xl bg-white ring-8 ring-white/20">
-                                <img src="{{ asset('assets/profil.JPG') }}" alt="Foto Profil"
-                                    class="w-full h-full object-cover">
+                                <img src="{{ $user->avatar ?? 'https://ui-avatars.com/api/?name=' . urlencode($user->name) . '&size=256' }}"
+                                    alt="Foto Profil" class="w-full h-full object-cover">
                             </div>
 
                             <h2 class="text-3xl font-black mt-6">
-                                Ikhwan Abdillah
+                                {{ $user->name }}
                             </h2>
 
                             <p class="text-indigo-200 mt-2 font-medium">
-                                Sistem Informasi
+                                {{ $user->email }}
                             </p>
 
-                            <div class="mt-8 flex justify-center gap-4">
+                            <div class="mt-8 flex justify-center">
 
                                 <div
-                                    class="bg-white/15 backdrop-blur px-5 py-4 rounded-2xl border border-white/20 shadow-lg">
+                                    class="bg-white/15 backdrop-blur px-6 py-4 rounded-2xl border border-white/20 shadow-lg">
                                     <p class="text-xs uppercase tracking-wider text-indigo-200">
-                                        Status
+                                        Status Akun
                                     </p>
 
-                                    <p class="font-black">
-                                        Mahasiswa
-                                    </p>
-                                </div>
-
-                                <div
-                                    class="bg-white/15 backdrop-blur px-5 py-4 rounded-2xl border border-white/20 shadow-lg">
-                                    <p class="text-xs uppercase tracking-wider text-indigo-200">
-                                        Angkatan
-                                    </p>
-
-                                    <p class="font-black">
-                                        2024
+                                    <p class="font-black text-lg">
+                                        {{ ucfirst($user->role ?? 'Pengguna') }}
                                     </p>
                                 </div>
 
@@ -96,41 +89,40 @@
                                 </p>
 
                                 <p class="text-xl font-bold text-slate-800">
-                                    Ikhwan Abdillah
+                                    {{ $user->name }}
                                 </p>
                             </div>
 
                             <div
                                 class="bg-slate-50 rounded-2xl p-5 border border-slate-100 shadow-sm hover:shadow-md transition">
                                 <p class="text-xs font-black uppercase tracking-wider text-slate-400 mb-2">
-                                    NIM
+                                    Email
                                 </p>
 
-                                <p class="text-xl font-bold text-slate-800">
-                                    24.12.3311
+                                <p class="text-xl font-bold text-slate-800 truncate">
+                                    {{ $user->email }}
                                 </p>
                             </div>
 
                             <div
                                 class="bg-slate-50 rounded-2xl p-5 border border-slate-100 shadow-sm hover:shadow-md transition">
                                 <p class="text-xs font-black uppercase tracking-wider text-slate-400 mb-2">
-                                    Jurusan
+                                    Status Akun
                                 </p>
 
                                 <p class="text-xl font-bold text-slate-800">
-                                    Sistem Informasi
+                                    {{ ucfirst($user->role ?? 'Pengguna') }}
                                 </p>
                             </div>
 
                             <div
-                                class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-6 border border-indigo-100 mt-8 shadow-sm">
-                                <p class="text-indigo-700 font-black">
-                                    Tentang
+                                class="bg-slate-50 rounded-2xl p-5 border border-slate-100 shadow-sm hover:shadow-md transition">
+                                <p class="text-xs font-black uppercase tracking-wider text-slate-400 mb-2">
+                                    Bergabung Sejak
                                 </p>
 
-                                <p class="text-slate-600 mt-2 leading-relaxed">
-                                    Mahasiswa Universitas Amikom Yogyakarta yang memiliki minat
-                                    pada pengembangan web, UI/UX, dan teknologi digital modern.
+                                <p class="text-xl font-bold text-slate-800">
+                                    {{ $user->created_at->format('d F Y') }}
                                 </p>
                             </div>
 

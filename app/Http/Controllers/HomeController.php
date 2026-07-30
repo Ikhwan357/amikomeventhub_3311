@@ -6,19 +6,30 @@ use Illuminate\Http\Request;
 use App\Models\Partner;
 use App\Models\Category;
 use App\Models\Event;
+use App\Models\Organization;
 
 class HomeController extends Controller
 {
     /**
      * Menampilkan halaman utama (beranda)
      */
-    public function index()
+    public function index(Request $request)
     {
         $partners = Partner::latest()->get();
         $categories = Category::latest()->get();
-        $events = Event::with('category')->latest()->take(3)->get();
 
-        return view('welcome', compact('partners', 'categories', 'events'));
+        $events = Event::with(['category', 'organization'])
+            ->when($request->organizer, function ($query, $organizer) {
+                return $query->where('organization_id', $organizer);
+            })
+            ->latest()
+            ->take(3)
+            ->get();
+
+        // Hanya organizer yang sudah punya event yang ditampilkan di filter
+        $organizers = Organization::whereHas('events')->get();
+
+        return view('welcome', compact('partners', 'categories', 'events', 'organizers'));
     }
 
     /**
@@ -34,16 +45,21 @@ class HomeController extends Controller
      */
     public function katalog(Request $request)
     {
-        $events = Event::with('category')
+        $events = Event::with(['category', 'organization'])
             ->when($request->search, function ($query, $search) {
                 return $query->where('title', 'LIKE', '%' . $search . '%')
                     ->orWhere('description', 'LIKE', '%' . $search . '%')
                     ->orWhere('location', 'LIKE', '%' . $search . '%');
             })
+            ->when($request->organizer, function ($query, $organizer) {
+                return $query->where('organization_id', $organizer);
+            })
             ->latest()
             ->get();
 
-        return view('katalog', compact('events'));
+        $organizers = Organization::whereHas('events')->get();
+
+        return view('katalog', compact('events', 'organizers'));
     }
 
     /**

@@ -36,7 +36,7 @@
                 </span>
 
                 <span class="text-xs text-slate-500 font-semibold">
-                    Admin Panel
+                    Super Admin
                 </span>
             </div>
         </div>
@@ -81,6 +81,22 @@
                 Kelola Kategori
             </a>
 
+            <a href="{{ route('admin.organizers.index') }}"
+                class="flex items-center gap-3 px-4 py-3 rounded-2xl font-bold transition
+    {{ request()->routeIs('admin.organizers.*') ? 'bg-white text-slate-950 shadow-lg' : 'text-slate-400 hover:bg-slate-900 hover:text-white' }}">
+
+                <svg class="w-5 h-5 {{ request()->routeIs('admin.organizers.*') ? 'text-slate-950' : 'text-slate-500' }}"
+                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 20h5V4H2v16h5m10 0v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5m10 0H7" />
+
+                </svg>
+
+                <span>Kelola Organizer</span>
+
+            </a>
+
             <a href="{{ route('admin.partners.index') }}"
                 class="flex items-center gap-3 px-4 py-3 rounded-2xl font-bold transition
                 {{ request()->routeIs('admin.partners.*') ? 'bg-white text-slate-950 shadow-lg' : 'text-slate-400 hover:bg-slate-900 hover:text-white' }}">
@@ -107,15 +123,54 @@
         </nav>
 
         <div class="pt-6 border-t border-slate-800">
+
+            <div class="px-4 mb-5">
+
+                <p class="text-white font-bold">
+                    {{ Auth::user()->name }}
+                </p>
+
+                <p class="text-slate-500 text-sm">
+                    {{ ucfirst(Auth::user()->role) }}
+                </p>
+
+            </div>
+
             <a href="{{ route('home') }}"
                 class="flex items-center gap-3 px-4 py-3 rounded-2xl text-slate-400 hover:bg-slate-900 hover:text-white transition font-bold">
-                <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
+                        d="M3 12l2-2m0 0l7-7 7 7m-9 9V9m0 0H5m7 0h7">
                     </path>
+
                 </svg>
-                Keluar ke Website
+
+                Website
+
             </a>
+
+            <form action="{{ route('logout') }}" method="POST" class="mt-2">
+
+                @csrf
+
+                <button type="submit"
+                    class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-red-400 hover:bg-red-600 hover:text-white transition font-bold">
+
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+
+                    </svg>
+
+                    Logout
+
+                </button>
+
+            </form>
+
         </div>
 
     </aside>

@@ -190,6 +190,77 @@
 
                 </div>
 
+                {{-- ================= REVIEW ================= --}}
+
+                @if ($transaction->status == 'paid')
+
+                    <div class="px-8 pb-2 no-print">
+
+                        @if (!$transaction->review)
+
+                            <div class="bg-yellow-50 border border-yellow-200 rounded-3xl p-6">
+
+                                <div class="flex items-center justify-between">
+
+                                    <div>
+
+                                        <h3 class="font-black text-xl text-slate-800">
+                                            Bagaimana pengalaman Anda?
+                                        </h3>
+
+                                        <p class="text-slate-500 mt-1">
+                                            Berikan rating dan ulasan untuk membantu peserta lain.
+                                        </p>
+
+                                    </div>
+
+                                    <a href="{{ route('reviews.create', $transaction) }}"
+                                        class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-2xl font-bold transition">
+
+                                        ⭐ Beri Review
+
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+                        @else
+
+                            <div class="bg-green-50 border border-green-200 rounded-3xl p-6">
+
+                                <div class="flex items-center gap-3">
+
+                                    <div class="text-4xl">
+
+                                        ⭐
+
+                                    </div>
+
+                                    <div>
+
+                                        <h3 class="font-black text-green-700">
+                                            Terima kasih!
+                                        </h3>
+
+                                        <p class="text-green-600">
+
+                                            Anda sudah memberikan review untuk event ini.
+
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        @endif
+
+                    </div>
+
+                @endif
+
                 <div class="px-8 pb-8 no-print">
 
                     <button onclick="window.print()"
